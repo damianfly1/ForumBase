@@ -12,8 +12,4 @@
     <Folder Include="Validators\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.34.3" />
-  </ItemGroup>
-
 </Project>

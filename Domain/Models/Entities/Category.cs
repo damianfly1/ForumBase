@@ -1,6 +1,4 @@
-﻿using Domain.Bases;
-
-namespace Domain.Models.Entities;
+﻿namespace Domain.Models.Entities;
 
 public class Category
 {
