@@ -1,5 +1,8 @@
-﻿namespace Domain.Repositories;
+﻿using Domain.Models.Entities;
 
-public interface IForumRepository
+namespace Domain.Repositories;
+
+public interface IForumRepository : IGenericRepository<Forum>
 {
+    Task<Forum> GetNested(Guid id);
 }

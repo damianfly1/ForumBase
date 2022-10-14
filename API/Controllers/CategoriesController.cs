@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -7,7 +8,7 @@ namespace API.Controllers
     public class CategoriesController : ControllerBase
     {
         [HttpPut("{id:guid}")]
-        public void Put([FromRoute] Guid id, [FromBody] string model)
+        public void Put([FromRoute] Guid id, [FromBody] CategoryCreateRequestModel model)
         {
         }
 
@@ -17,7 +18,7 @@ namespace API.Controllers
         }
 
         [HttpPost("{id:guid}/SubForums")]
-        public void AddSubForum([FromRoute] Guid id, [FromBody] string model)
+        public void AddSubForum([FromRoute] Guid id, [FromBody] SubForumModel model)
         {
         }
     }

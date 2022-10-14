@@ -3,9 +3,9 @@ using System.Data.Entity;
 
 namespace Persistance;
 
-public class ForumHubDbContext : DbContext
+public class ForumHubDBContext : DbContext
 {
-    public ForumHubDbContext() : base("ForumHubDB")
+    public ForumHubDBContext() : base("ForumHubDB")
     {
     }
 

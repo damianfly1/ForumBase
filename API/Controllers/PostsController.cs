@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using API.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -8,7 +9,7 @@ namespace API.Controllers
     public class PostsController : ControllerBase
     {
         [HttpPut("{id:guid}")]
-        public void Put([FromRoute] Guid id, [FromBody] string model)
+        public void Put([FromRoute] Guid id, [FromBody] PostModel model)
         {
         }
 

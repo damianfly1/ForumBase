@@ -1,5 +1,4 @@
-﻿using Domain.Bases;
-using Domain.Models.Enums;
+﻿using Domain.Models.Enums;
 
 namespace Domain.Models.Entities;
 
@@ -13,6 +12,11 @@ public class Message
         Author = author;
         Recipent = recipent;
     }
+
+    public Message()
+    {
+    }
+
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime LastUpdatedAt { get; set; }

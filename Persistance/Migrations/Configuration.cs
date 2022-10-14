@@ -5,14 +5,14 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Persistance.ForumHubDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Persistance.ForumHubDBContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Persistance.ForumHubDbContext context)
+        protected override void Seed(Persistance.ForumHubDBContext context)
         {
             //  This method will be called after migrating to the latest version.
 

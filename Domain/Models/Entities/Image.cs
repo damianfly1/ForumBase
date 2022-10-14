@@ -7,6 +7,10 @@ public class Image
         Data = data;
     }
 
+    public Image()
+    {
+    }
+
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime LastUpdatedAt { get; set; }

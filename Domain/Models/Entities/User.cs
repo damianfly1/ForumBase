@@ -1,8 +1,6 @@
-﻿using Domain.Bases;
-using Domain.Models.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Domain.Models.Enums;
 
-namespace Domain.Models.Entities; 
+namespace Domain.Models.Entities;
 
 public class User
 {
@@ -10,6 +8,10 @@ public class User
     {
         NickName = nickName;
         Email = email;
+    }
+
+    public User()
+    {
     }
 
     public Guid Id { get; set; }

@@ -9,6 +9,11 @@ public class Subforum
         Category = category;
         Parent = parent;
     }
+
+    public Subforum()
+    {
+    }
+
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime LastUpdatedAt { get; set; }
