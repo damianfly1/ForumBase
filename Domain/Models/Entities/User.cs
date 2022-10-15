@@ -21,11 +21,12 @@ public class User
     public string Email { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
+    public Guid? AvatarId { get; set; }
     public Image? Avatar { get; set; } = null;
     public bool IsBanned { get; set; } = false;
     public int Reputation { get; set; } = 0;
     public string? Footer { get; set; } = null;
     public UserRole Role { get; set; } = UserRole.Normal;
 
-    public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+    public ICollection<CategoryModerator> CategoryModerators { get; set; }
 }

@@ -20,9 +20,16 @@ public class CategoryService : ICategoryService
         var forum = await _forumRepository.GetById(forumId);
 
         Category category = new Category(model.Name, forum, model.Description);
-        var result = _categoryRepository.Insert(category);
+        var result = await _categoryRepository.Insert(category);
         await _categoryRepository.Save();
         return result;
         
+    }
+
+    public async Task<Category> DeleteCategory(Guid categoryId)
+    {
+        var result = _categoryRepository.Delete(categoryId);
+        await _categoryRepository.Save();
+        return result;
     }
 }

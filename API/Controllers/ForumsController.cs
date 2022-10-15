@@ -30,8 +30,10 @@ public class ForumsController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public void Put([FromRoute] Guid id, [FromBody] ForumModel model)
+    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateForumDto model)
     {
+        var forumModel = await _forumService.UpdateForum(id, model);
+        return Ok(forumModel);
     }
 
     [HttpPost("{id:guid}/Categories")]

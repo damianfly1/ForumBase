@@ -6,4 +6,5 @@ namespace Application.Services;
 public interface ICategoryService
 {
     public Task<Category> CreateCategory(Guid forumId, CreateCategoryDto model);
+    public Task<Category> DeleteCategory(Guid categoryId);
 }

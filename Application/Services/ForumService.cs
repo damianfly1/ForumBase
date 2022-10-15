@@ -1,4 +1,5 @@
-﻿using Domain.Models.Entities;
+﻿using Application.DTOs;
+using Domain.Models.Entities;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,30 @@ public class ForumService : IForumService
         _forumRepository = forumRepository;
     }
 
-    public Task<Forum> GetForumNested(Guid id)
+    public async Task<Forum> GetForumNested(Guid id)
     {
-        var forum = _forumRepository.GetNested(id);
+        var forum = await _forumRepository.GetNested(id);
         if(forum is null)
         {
             throw new Exception("Item not found");
         }
+        return forum;
+    }
+
+    public async Task<Forum> UpdateForum(Guid id, UpdateForumDto model)
+    {
+        var forum = await _forumRepository.GetById(id);
+        if (forum is null)
+        {
+            throw new Exception("Item not found");
+        }
+        forum.Description = model.Description;
+        forum.Name = model.Name;
+        forum.Rules = model.Rules;
+        forum.Faq = model.Faq;  
+
+        await _forumRepository.Update(forum);
+        await _forumRepository.Save();
         return forum;
     }
 }

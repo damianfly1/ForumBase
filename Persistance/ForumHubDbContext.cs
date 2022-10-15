@@ -1,21 +1,102 @@
 ﻿using Domain.Models.Entities;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
 
 namespace Persistance;
 
 public class ForumHubDBContext : DbContext
 {
-    public ForumHubDBContext() : base("ForumHubDB")
-    {
-    }
-
     public DbSet<Forum> Forums  => Set<Forum>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Subforum> Subforums => Set<Subforum>();
     public DbSet<Topic> Topics => Set<Topic>();
     public DbSet<Post> Posts => Set<Post>();
-    public DbSet<Message> Messages => Set<Message>();
     public DbSet<Image> Images => Set<Image>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ForumHubDB;Trusted_Connection=True;");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Category>()
+            .HasOne(c => c.CreatedBy)
+            .WithMany()
+            .HasForeignKey(c => c.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Category>()
+            .HasOne(c => c.LastUpdatedBy)
+            .WithMany()
+            .HasForeignKey(c => c.LastUpdatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Forum>()
+            .HasOne(f => f.CreatedBy)
+            .WithMany()
+            .HasForeignKey(f => f.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Forum>()
+            .HasOne(f => f.LastUpdatedBy)
+            .WithMany()
+            .HasForeignKey(f => f.LastUpdatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Post>()
+            .HasOne(p => p.CreatedBy)
+            .WithMany()
+            .HasForeignKey(p => p.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Post>()
+            .HasOne(p => p.LastUpdatedBy)
+            .WithMany()
+            .HasForeignKey(p => p.LastUpdatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Subforum>()
+            .HasOne(s => s.CreatedBy)
+            .WithMany()
+            .HasForeignKey(s => s.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Subforum>()
+            .HasOne(s => s.LastUpdatedBy)
+            .WithMany()
+            .HasForeignKey(s => s.LastUpdatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Topic>()
+            .HasOne(t => t.CreatedBy)
+            .WithMany()
+            .HasForeignKey(t => t.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Topic>()
+            .HasOne(t => t.LastUpdatedBy)
+            .WithMany()
+            .HasForeignKey(t => t.LastUpdatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Image>()
+            .HasOne(i => i.CreatedBy)
+            .WithOne()
+            .HasForeignKey<Image>(i => i.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<User>()
+            .HasOne(i => i.Avatar)
+            .WithOne()
+            .HasForeignKey<User>(i => i.AvatarId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<CategoryModerator>()
+            .HasKey(cm => new { cm.UserId, cm.CategoryId });
+    }
 
 }

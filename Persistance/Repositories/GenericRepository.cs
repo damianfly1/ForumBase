@@ -1,5 +1,5 @@
 ﻿using Domain.Repositories;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Repositories;
 
@@ -7,11 +7,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     public ForumHubDBContext _context;
     public DbSet<T> table;
-    public GenericRepository()
-    {
-        this._context = new ForumHubDBContext();
-        table = _context.Set<T>();
-    }
     public GenericRepository(ForumHubDBContext _context)
     {
         this._context = _context;
@@ -25,15 +20,14 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return await table.FindAsync(id);
     }
-    public T Insert(T obj)
+    public async Task<T> Insert(T obj)
     {
-        return table.Add(obj);
+        await table.AddAsync(obj);
+        return obj;
     }
-    public T Update(T obj)
+    public Task Update(T obj)
     {
-        T updatedEntity = table.Attach(obj);
-        _context.Entry(obj).State = EntityState.Modified;
-        return updatedEntity;
+        return _context.SaveChangesAsync();
     }
     public T Delete(object id)
     {
