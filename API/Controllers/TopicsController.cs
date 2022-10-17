@@ -1,6 +1,4 @@
-﻿using API.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -15,7 +13,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public void Put([FromRoute] Guid id, [FromBody] TopicModel model)
+        public void Put([FromRoute] Guid id, [FromBody] string model)
         {
         }
 
@@ -25,7 +23,7 @@ namespace API.Controllers
         }
 
         [HttpPost("{id:guid}/Posts")]
-        public void AddPost([FromRoute] Guid id, [FromBody] PostModel model)
+        public void AddPost([FromRoute] Guid id, [FromBody] string model)
         {
         }
     }

@@ -1,11 +1,9 @@
-﻿using Application.DTOs;
-using Domain.Models.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using Application.DTOs.Forum;
 
 namespace Application.Services;
 
 public interface IForumService
 {
-    public Task<Forum> GetForumNested(Guid id);
-    public Task<Forum> UpdateForum(Guid id, UpdateForumDto model);
+    public Task<ForumNestedResponseDto> GetForumNested(Guid id);
+    public Task<ForumResponseDto> UpdateForum(Guid id, UpdateForumDto updateForumDto);
 }

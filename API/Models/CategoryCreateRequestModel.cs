@@ -1,9 +1,0 @@
-﻿namespace API.Models
-{
-    public class CategoryCreateRequestModel
-    {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public bool IsModerationOnly { get; set; } 
-    }
-}

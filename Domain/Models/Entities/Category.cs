@@ -27,6 +27,6 @@ public class Category
 
     public Guid ForumId { get; set; }
     public Forum Forum { get; set; }
-    public ICollection<Subforum> Subforums { get; set; } = new List<Subforum>();
+    public ICollection<SubForum> Subforums { get; set; } = new List<SubForum>();
     public ICollection<CategoryModerator> CategoryModerators { get; set; }
 }

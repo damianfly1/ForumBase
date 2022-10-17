@@ -1,8 +1,8 @@
 ﻿namespace Domain.Models.Entities;
 
-public class Subforum
+public class SubForum
 {
-    public Subforum(string name, Category? category, Subforum? parent, string? description = null)
+    public SubForum(string name, Category? category, SubForum? parent, string? description = null)
     {
         Name = name;
         Description = description;
@@ -10,7 +10,7 @@ public class Subforum
         Parent = parent;
     }
 
-    public Subforum()
+    public SubForum()
     {
     }
 
@@ -27,7 +27,7 @@ public class Subforum
     public Guid? CategoryId { get; set; }
     public Category? Category { get; set; }
     public Guid? ParentId { get; set; }
-    public Subforum? Parent { get; set; }
+    public SubForum? Parent { get; set; }
     public ICollection<Topic> Topics { get; set; } = new List<Topic>();
     
 }

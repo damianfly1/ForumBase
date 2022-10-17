@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using Application.DTOs;
+using Application.DTOs.Category;
 using Application.Services;
 using Domain.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -17,19 +18,19 @@ namespace API.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public void Put([FromRoute] Guid id, [FromBody] CategoryCreateRequestModel model)
+        public void Put([FromRoute] Guid id, [FromBody] CreateCategoryDto model)
         {
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<Category> Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var deleted =  await _categoryService.DeleteCategory(id);
-            return deleted;
+            return Ok(deleted);
         }
 
         [HttpPost("{id:guid}/SubForums")]
-        public void AddSubForum([FromRoute] Guid id, [FromBody] SubForumModel model)
+        public void AddSubForum([FromRoute] Guid id, [FromBody] string model)
         {
         }
     }

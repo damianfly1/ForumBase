@@ -9,7 +9,7 @@ public class ForumHubDBContext : DbContext
     public DbSet<Forum> Forums  => Set<Forum>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();
-    public DbSet<Subforum> Subforums => Set<Subforum>();
+    public DbSet<SubForum> Subforums => Set<SubForum>();
     public DbSet<Topic> Topics => Set<Topic>();
     public DbSet<Post> Posts => Set<Post>();
     public DbSet<Image> Images => Set<Image>();
@@ -59,13 +59,13 @@ public class ForumHubDBContext : DbContext
             .HasForeignKey(p => p.LastUpdatedById)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Subforum>()
+        modelBuilder.Entity<SubForum>()
             .HasOne(s => s.CreatedBy)
             .WithMany()
             .HasForeignKey(s => s.CreatedById)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Subforum>()
+        modelBuilder.Entity<SubForum>()
             .HasOne(s => s.LastUpdatedBy)
             .WithMany()
             .HasForeignKey(s => s.LastUpdatedById)

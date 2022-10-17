@@ -1,43 +1,46 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Forum;
+using AutoMapper;
 using Domain.Models.Entities;
 using Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Services;
 
 public class ForumService : IForumService
 {
     private readonly IForumRepository _forumRepository;
+    private readonly IMapper _mapper;
 
-    public ForumService(IForumRepository forumRepository)
+    public ForumService(IForumRepository forumRepository, IMapper mapper)
     {
         _forumRepository = forumRepository;
+        _mapper = mapper;
     }
-
-    public async Task<Forum> GetForumNested(Guid id)
+    
+    public async Task<ForumNestedResponseDto> GetForumNested(Guid id)
     {
         var forum = await _forumRepository.GetNested(id);
-        if(forum is null)
-        {
-            throw new Exception("Item not found");
-        }
-        return forum;
+
+        if(forum is null) throw new Exception("Item not found");
+        
+        return _mapper.Map<ForumNestedResponseDto>(forum);
     }
 
-    public async Task<Forum> UpdateForum(Guid id, UpdateForumDto model)
+    public async Task<ForumResponseDto> UpdateForum(Guid id, UpdateForumDto updateForumDto)
     {
         var forum = await _forumRepository.GetById(id);
-        if (forum is null)
-        {
-            throw new Exception("Item not found");
-        }
-        forum.Description = model.Description;
-        forum.Name = model.Name;
-        forum.Rules = model.Rules;
-        forum.Faq = model.Faq;  
+
+        if (forum is null) throw new Exception("Item not found");
+
+        forum.Description = updateForumDto.Description;
+        forum.Name = updateForumDto.Name;
+        forum.Rules = updateForumDto.Rules;
+        forum.Faq = updateForumDto.Faq;
+        forum.LastUpdatedAt = DateTime.UtcNow;
+
+        //forum = _mapper.Map<Forum>(updateForumDto, forum);
 
         await _forumRepository.Update(forum);
         await _forumRepository.Save();
-        return forum;
+        return _mapper.Map<ForumResponseDto>(forum);
     }
 }
