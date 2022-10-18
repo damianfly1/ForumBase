@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.SubForum;
+using Application.DTOs.Topic;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,14 @@ namespace API.Controllers
     public class SubForumsController : ControllerBase
     {
         private readonly ISubForumService _subForumService;
+        private readonly ITopicService _topicService;
+        private readonly IPostService _postService;
 
-        public SubForumsController(ISubForumService subForumService)
+        public SubForumsController(ISubForumService subForumService, ITopicService topicService, IPostService postService)
         {
             _subForumService = subForumService;
+            _topicService = topicService;
+            _postService = postService;
         }
 
         [HttpGet("{id:guid}")]
@@ -37,8 +42,10 @@ namespace API.Controllers
         }
 
         [HttpPost("{id:guid}/Topics")]
-        public void AddTopic([FromRoute] Guid id, [FromBody] string model)
+        public async Task<IActionResult> AddTopic([FromRoute] Guid id, [FromBody] CreateTopicDto createTopicDto)
         {
+            var topicDto = await _topicService.AddTopic(id, createTopicDto);
+            return Ok(topicDto);
         }
     }
 }

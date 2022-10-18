@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Category;
 using Application.DTOs.Forum;
+using Application.DTOs.Post;
 using Application.DTOs.SubForum;
 using Application.DTOs.Topic;
 using AutoMapper;
@@ -10,10 +11,7 @@ namespace Application.Mappings;
 public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
-    {
-        //POST PUT category
-        CreateMap<Category, CategoryResponseDto>();
-
+    {   
         //GET forum nested
         CreateMap<Forum, ForumNestedResponseDto>()
             .ForMember(f => f.Categories, opt => opt.MapFrom(c => c.Categories));
@@ -23,13 +21,27 @@ public class AutoMapperProfile : Profile
 
         //PUT forum
         CreateMap<Forum, ForumResponseDto>();
-        CreateMap<UpdateForumDto, Forum>()
-            .AfterMap((src, dest) => dest.LastUpdatedAt = DateTime.UtcNow);
+
+        //POST PUT DELETE category
+        CreateMap<Category, CategoryResponseDto>();
 
         //GET subforum nested
         CreateMap<SubForum, SubForumParentNestedResponseDto>()
             .ForMember(sf => sf.Topics, opt => opt.MapFrom(t => t.Topics));
         CreateMap<Topic, TopicNestedResponseDto>();
 
+        //POST PUT DELETE subforum
+        CreateMap<SubForum, SubForumResponseDto>();
+
+        //GET topic nested
+        CreateMap<Topic, TopicParentNestedResponseDto>()
+            .ForMember(t => t.Posts, opt => opt.MapFrom(p => p.Posts));
+        CreateMap<Post, PostNestedResponseDto>();
+
+        //POST PUT DELETE topic
+        CreateMap<Topic, TopicResponseDto>();
+
+        //POST PUT DELETE category
+        CreateMap<Post, PostResponseDto>();
     }
 }

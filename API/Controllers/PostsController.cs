@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.DTOs.Post;
+using Application.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -6,14 +8,25 @@ namespace API.Controllers
     [ApiController]
     public class PostsController : ControllerBase
     {
-        [HttpPut("{id:guid}")]
-        public void Put([FromRoute] Guid id, [FromBody] string model)
+        private readonly IPostService _postService;
+
+        public PostsController(IPostService postService)
         {
+            _postService = postService;
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdatePostDto updatePostDto)
+        {
+            var post = await _postService.UpdatePost(id, updatePostDto);
+            return Ok(post);
         }
 
         [HttpDelete("{id:guid}")]
-        public void Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
+            var post = await _postService.DeletePost(id);
+            return Ok(post);
         }
     }
 }

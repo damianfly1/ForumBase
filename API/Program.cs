@@ -17,6 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ForumHubDBContext>();
 
+
+//automapper
 var mappingConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new AutoMapperProfile());
@@ -24,13 +26,20 @@ var mappingConfig = new MapperConfiguration(mc =>
 IMapper autoMapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(autoMapper);
 
+//services
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IForumService, ForumService>();
 builder.Services.AddScoped<ISubForumService, SubForumService>();
+builder.Services.AddScoped<ITopicService, TopicService>();
+builder.Services.AddScoped<IPostService, PostService>();
 
+
+//repositories
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IForumRepository, ForumRepository>();
 builder.Services.AddScoped<ISubForumRepository, SubForumRepository>();
+builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+
 
 var app = builder.Build();
 

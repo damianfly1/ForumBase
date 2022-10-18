@@ -2,10 +2,11 @@
 
 public class Topic
 {
-    public Topic(string name, User author)
+    public Topic(string name, bool isPinned, bool isClosed)
     {
         Name = name;
-        Author = author;
+        IsPinned = isPinned;
+        IsClosed = isClosed;
     }
 
     public Topic()

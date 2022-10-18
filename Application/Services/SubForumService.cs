@@ -1,10 +1,7 @@
-﻿using Application.DTOs.Category;
-using Application.DTOs.Forum;
-using Application.DTOs.SubForum;
+﻿using Application.DTOs.SubForum;
 using AutoMapper;
 using Domain.Models.Entities;
 using Domain.Repositories;
-using Persistance.Repositories;
 
 namespace Application.Services;
 

@@ -1,18 +1,11 @@
-﻿namespace Domain.Models.Entities;
+﻿using Domain.Models.Entities;
 
-public class Post
+namespace Application.DTOs.Post;
+
+public class PostResponseDto
 {
-    public Post(string text)
-    {
-        Text = text;
-    }
-
-    public Post()
-    {
-    }
-
     public Guid Id { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt { get; set; }
     public DateTime LastUpdatedAt { get; set; }
     public Guid? LastUpdatedById { get; set; }
     public User? LastUpdatedBy { get; set; }
@@ -21,5 +14,4 @@ public class Post
     public bool IsEdited { get; set; } = false;
 
     public Guid AuthorId { get; set; }
-    public User Author { get; set; }
 }
