@@ -21,22 +21,22 @@ public class ForumsController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        var forum = await _forumService.GetForumNested(id);
-        return Ok(forum);
+        var forumDto = await _forumService.GetForumNested(id);
+        return Ok(forumDto);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateForumDto updateForumDto)
     {
-        var forumModel = await _forumService.UpdateForum(id, updateForumDto);
-        return Ok(forumModel);
+        var forumDto = await _forumService.UpdateForum(id, updateForumDto);
+        return Ok(forumDto);
     }
 
     [HttpPost("{id:guid}/Categories")]
     public async Task<IActionResult> AddCategory([FromRoute] Guid id, [FromBody] CreateCategoryDto createCategoryDto)
     {
-        var category = await _categoryService.AddCategory(id, createCategoryDto);
-        return Ok(category);
+        var categoryDto = await _categoryService.AddCategory(id, createCategoryDto);
+        return Ok(categoryDto);
     }
 
 }

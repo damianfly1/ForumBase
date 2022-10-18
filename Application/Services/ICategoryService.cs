@@ -5,6 +5,7 @@ namespace Application.Services;
 
 public interface ICategoryService
 {
-    public Task<CategoryResponseDto> AddCategory(Guid forumId, CreateCategoryDto model);
-    public Task<CategoryResponseDto> DeleteCategory(Guid categoryId);
+    public Task<CategoryResponseDto> AddCategory(Guid forumId, CreateCategoryDto createCategoryDto);
+    public Task<CategoryResponseDto> UpdateCategory(Guid Id, UpdateCategoryDto updateCategoryDto);
+    public Task<CategoryResponseDto> DeleteCategory(Guid Id);
 }

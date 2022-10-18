@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.DTOs.SubForum;
+using Application.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -6,20 +8,32 @@ namespace API.Controllers
     [ApiController]
     public class SubForumsController : ControllerBase
     {
-        [HttpGet("{id:guid}")]
-        public string Get([FromRoute] Guid id)
+        private readonly ISubForumService _subForumService;
+
+        public SubForumsController(ISubForumService subForumService)
         {
-            return "value";
+            _subForumService = subForumService;
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> Get([FromRoute] Guid id)
+        {
+            var subForumDto = await _subForumService.GetSubForumNested(id);
+            return Ok(subForumDto);
         }
 
         [HttpPut("{id:guid}")]
-        public void Put([FromRoute] Guid id, [FromBody] string model)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateSubForumDto updateSubForumDto)
         {
+            var subForumDto = await _subForumService.UpdateSubForum(id, updateSubForumDto);
+            return Ok(subForumDto);
         }
 
         [HttpDelete("{id:guid}")]
-        public void Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
+            var subForumDto = await _subForumService.DeleteSubForum(id);
+            return Ok(subForumDto);
         }
 
         [HttpPost("{id:guid}/Topics")]

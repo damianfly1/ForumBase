@@ -47,11 +47,11 @@ public class ForumHubDBContext : DbContext
             .HasForeignKey(f => f.LastUpdatedById)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Post>()
-            .HasOne(p => p.CreatedBy)
-            .WithMany()
-            .HasForeignKey(p => p.CreatedById)
-            .OnDelete(DeleteBehavior.Restrict);
+        //modelBuilder.Entity<Post>()
+        //    .HasOne(p => p.CreatedBy)
+        //    .WithMany()
+        //    .HasForeignKey(p => p.CreatedById)
+        //    .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Post>()
             .HasOne(p => p.LastUpdatedBy)
@@ -71,11 +71,11 @@ public class ForumHubDBContext : DbContext
             .HasForeignKey(s => s.LastUpdatedById)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Topic>()
-            .HasOne(t => t.CreatedBy)
-            .WithMany()
-            .HasForeignKey(t => t.CreatedById)
-            .OnDelete(DeleteBehavior.Restrict);
+        //modelBuilder.Entity<Topic>()
+        //    .HasOne(t => t.CreatedBy)
+        //    .WithMany()
+        //    .HasForeignKey(t => t.CreatedById)
+        //    .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Topic>()
             .HasOne(t => t.LastUpdatedBy)

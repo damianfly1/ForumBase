@@ -29,9 +29,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return _context.SaveChangesAsync();
     }
-    public T Delete(object id)
+    public async Task<T> Delete(object id)
     {
-        T existing = table.Find(id);
+        var existing = await table.FindAsync(id);
         table.Remove(existing);
         return existing;
     }

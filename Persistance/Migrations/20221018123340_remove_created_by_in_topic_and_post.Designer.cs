@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
@@ -11,9 +12,10 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(ForumHubDBContext))]
-    partial class ForumHubDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221018123340_remove_created_by_in_topic_and_post")]
+    partial class remove_created_by_in_topic_and_post
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,6 +219,9 @@ namespace Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -224,6 +229,8 @@ namespace Persistance.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("LastUpdatedById");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Subforums");
                 });
@@ -429,11 +436,17 @@ namespace Persistance.Migrations
                         .HasForeignKey("LastUpdatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Domain.Models.Entities.SubForum", "Parent")
+                        .WithMany("SubForums")
+                        .HasForeignKey("ParentId");
+
                     b.Navigation("Category");
 
                     b.Navigation("CreatedBy");
 
                     b.Navigation("LastUpdatedBy");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Domain.Models.Entities.Topic", b =>
@@ -482,6 +495,8 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Models.Entities.SubForum", b =>
                 {
+                    b.Navigation("SubForums");
+
                     b.Navigation("Topics");
                 });
 

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Category;
+using Application.DTOs.Forum;
 using AutoMapper;
 using Domain.Models.Entities;
 using Domain.Repositories;
@@ -28,13 +29,27 @@ public class CategoryService : ICategoryService
         var result = await _categoryRepository.Insert(category);
         await _categoryRepository.Save();
         return _mapper.Map<CategoryResponseDto>(result);
-        
     }
 
-    public async Task<CategoryResponseDto> DeleteCategory(Guid categoryId)
+    public async Task<CategoryResponseDto> DeleteCategory(Guid id)
     {
-        var result = _categoryRepository.Delete(categoryId);
+        var result = await _categoryRepository.Delete(id);
         await _categoryRepository.Save();
         return _mapper.Map<CategoryResponseDto>(result);
+    }
+
+    public async Task<CategoryResponseDto> UpdateCategory(Guid id, UpdateCategoryDto updateCategoryDto)
+    {
+        var category = await _categoryRepository.GetById(id);
+
+        if (category is null) throw new Exception("Item not found");
+
+        category.Description = updateCategoryDto.Description;
+        category.Name = updateCategoryDto.Name;
+        category.IsModerationOnly = updateCategoryDto.IsModerationOnly;
+        category.LastUpdatedAt = DateTime.UtcNow;
+
+        await _categoryRepository.Update(category);
+        return _mapper.Map<CategoryResponseDto>(category);
     }
 }

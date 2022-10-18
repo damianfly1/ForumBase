@@ -2,12 +2,11 @@
 
 public class SubForum
 {
-    public SubForum(string name, Category? category, SubForum? parent, string? description = null)
+    public SubForum(string name, string? description, Category? category)
     {
         Name = name;
         Description = description;
         Category = category;
-        Parent = parent;
     }
 
     public SubForum()
@@ -26,8 +25,6 @@ public class SubForum
 
     public Guid? CategoryId { get; set; }
     public Category? Category { get; set; }
-    public Guid? ParentId { get; set; }
-    public SubForum? Parent { get; set; }
     public ICollection<Topic> Topics { get; set; } = new List<Topic>();
     
 }

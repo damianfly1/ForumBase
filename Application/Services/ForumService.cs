@@ -37,8 +37,6 @@ public class ForumService : IForumService
         forum.Faq = updateForumDto.Faq;
         forum.LastUpdatedAt = DateTime.UtcNow;
 
-        //forum = _mapper.Map<Forum>(updateForumDto, forum);
-
         await _forumRepository.Update(forum);
         await _forumRepository.Save();
         return _mapper.Map<ForumResponseDto>(forum);

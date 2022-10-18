@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.DTOs.Category;
+using Application.DTOs.SubForum;
 using Application.Services;
 using Domain.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +12,19 @@ namespace API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
+        private readonly ISubForumService _subForumService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService, ISubForumService subForumService)
         {
             _categoryService = categoryService;
+            _subForumService = subForumService;
         }
 
         [HttpPut("{id:guid}")]
-        public void Put([FromRoute] Guid id, [FromBody] CreateCategoryDto model)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCategoryDto updateCategoryDto)
         {
+            var categoryDto = await _categoryService.UpdateCategory(id, updateCategoryDto);
+            return Ok(categoryDto);
         }
 
         [HttpDelete("{id:guid}")]
@@ -30,8 +35,10 @@ namespace API.Controllers
         }
 
         [HttpPost("{id:guid}/SubForums")]
-        public void AddSubForum([FromRoute] Guid id, [FromBody] string model)
+        public async Task<IActionResult> AddSubForum([FromRoute] Guid id, [FromBody] CreateSubForumDto createSubForumDto)
         {
+            var subForumDto = await _subForumService.AddSubForum(id, createSubForumDto);
+            return Ok(subForumDto);
         }
     }
 }

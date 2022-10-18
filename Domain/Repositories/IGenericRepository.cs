@@ -6,6 +6,6 @@ public interface IGenericRepository<T> where T : class
     Task<T> GetById(object id);
     Task<T> Insert(T obj);
     Task Update(T obj);
-    T Delete(object id);
+    Task<T> Delete(object id);
     Task Save();
 }
