@@ -19,6 +19,7 @@ public class ForumsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ForumNestedResponseDto), 200)]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
         var forumDto = await _forumService.GetForumNested(id);

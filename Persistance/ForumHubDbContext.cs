@@ -1,13 +1,14 @@
 ﻿using Domain.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
 
 namespace Persistance;
 
-public class ForumHubDBContext : DbContext
+public class ForumHubDBContext : IdentityDbContext<User>
 {
     public DbSet<Forum> Forums  => Set<Forum>();
-    public DbSet<User> Users => Set<User>();
+    //public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<SubForum> Subforums => Set<SubForum>();
     public DbSet<Topic> Topics => Set<Topic>();

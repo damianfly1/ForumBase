@@ -1,8 +1,9 @@
 ﻿using Domain.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Models.Entities;
 
-public class User
+public class User : IdentityUser
 {
     public User(string nickName, string email)
     {
