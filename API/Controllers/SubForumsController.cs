@@ -1,4 +1,5 @@
-﻿using Application.DTOs.SubForum;
+﻿using Application.DTOs.Category;
+using Application.DTOs.SubForum;
 using Application.DTOs.Topic;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(SubForumParentNestedResponseDto), 200)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var subForumDto = await _subForumService.GetSubForumNested(id);
@@ -28,6 +30,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id:guid}")]
+        [ProducesResponseType(typeof(SubForumResponseDto), 200)]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateSubForumDto updateSubForumDto)
         {
             var subForumDto = await _subForumService.UpdateSubForum(id, updateSubForumDto);
@@ -35,6 +38,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(SubForumResponseDto), 200)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var subForumDto = await _subForumService.DeleteSubForum(id);
@@ -42,6 +46,7 @@ namespace API.Controllers
         }
 
         [HttpPost("{id:guid}/Topics")]
+        [ProducesResponseType(typeof(TopicResponseDto), 200)]
         public async Task<IActionResult> AddTopic([FromRoute] Guid id, [FromBody] CreateTopicDto createTopicDto)
         {
             var topicDto = await _topicService.AddTopic(id, createTopicDto);

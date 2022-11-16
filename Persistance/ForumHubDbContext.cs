@@ -1,4 +1,5 @@
-﻿using Domain.Models.Entities;
+﻿using Domain.Models.Configuration;
+using Domain.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
@@ -8,7 +9,6 @@ namespace Persistance;
 public class ForumHubDBContext : IdentityDbContext<User>
 {
     public DbSet<Forum> Forums  => Set<Forum>();
-    //public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<SubForum> Subforums => Set<SubForum>();
     public DbSet<Topic> Topics => Set<Topic>();
@@ -23,6 +23,7 @@ public class ForumHubDBContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
         modelBuilder.Entity<Category>()
             .HasOne(c => c.CreatedBy)
@@ -60,6 +61,12 @@ public class ForumHubDBContext : IdentityDbContext<User>
             .HasForeignKey(p => p.LastUpdatedById)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<Post>()
+            .HasOne(p => p.Topic)
+            .WithMany(t=>t.Posts)
+            .HasForeignKey(p => p.TopicId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<SubForum>()
             .HasOne(s => s.CreatedBy)
             .WithMany()
@@ -95,9 +102,6 @@ public class ForumHubDBContext : IdentityDbContext<User>
             .WithOne()
             .HasForeignKey<User>(i => i.AvatarId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<CategoryModerator>()
-            .HasKey(cm => new { cm.UserId, cm.CategoryId });
     }
 
 }

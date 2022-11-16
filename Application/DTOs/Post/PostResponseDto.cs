@@ -8,7 +8,7 @@ public class PostResponseDto
     public DateTime CreatedAt { get; set; }
     public DateTime LastUpdatedAt { get; set; }
     public Guid? LastUpdatedById { get; set; }
-    public User? LastUpdatedBy { get; set; }
+    public Domain.Models.Entities.User? LastUpdatedBy { get; set; }
     public string Text { get; set; }
     public int Rating { get; set; } = 0;
     public bool IsEdited { get; set; } = false;

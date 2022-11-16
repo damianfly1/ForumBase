@@ -49,8 +49,8 @@ public class SubForumService : ISubForumService
 
         if (subForum is null) throw new Exception("Item not found");
 
-        subForum.Description = subForum.Description;
-        subForum.Name = subForum.Name;
+        subForum.Description = updateSubForumDto.Description;
+        subForum.Name = updateSubForumDto.Name;
         subForum.LastUpdatedAt = DateTime.UtcNow;
 
         await _subForumRepository.Update(subForum);

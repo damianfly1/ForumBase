@@ -21,8 +21,8 @@ public class PostService : IPostService
 
     public async Task<PostResponseDto> AddPost(Guid topicId, CreatePostDto createPostDto)
     {
-        var forum = await _topicRepository.GetById(topicId);
-        Post post = new Post(createPostDto.Text);
+        var topic = await _topicRepository.GetById(topicId);
+        Post post = new Post(createPostDto.Text, topic);
         var result = await _postRepository.Insert(post);
         await _postRepository.Save();
         return _mapper.Map<PostResponseDto>(result);

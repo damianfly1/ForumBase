@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Post;
+﻿using Application.DTOs.Category;
+using Application.DTOs.Post;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id:guid}")]
+        [ProducesResponseType(typeof(PostResponseDto), 200)]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdatePostDto updatePostDto)
         {
             var post = await _postService.UpdatePost(id, updatePostDto);
@@ -23,6 +25,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(PostResponseDto), 200)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var post = await _postService.DeletePost(id);

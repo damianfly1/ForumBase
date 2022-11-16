@@ -2,26 +2,29 @@
 
 public class Topic
 {
-    public Topic(string name, bool isPinned, bool isClosed)
+    public Topic()
+    {
+    }
+    public Topic(string name, SubForum subForum, bool isPinned, bool isClosed)
     {
         Name = name;
         IsPinned = isPinned;
         IsClosed = isClosed;
+        SubForum = subForum;
     }
 
-    public Topic()
-    {
-    }
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime LastUpdatedAt { get; set; }
-    public Guid? LastUpdatedById { get; set; }
+    public string? LastUpdatedById { get; set; }
     public User? LastUpdatedBy { get; set; }
     public string Name { get; set; }
     public bool IsPinned { get; set; } = false;
     public bool IsClosed { get; set; } = false;
 
-    public Guid AuthorId { get; set; }
-    public User Author { get; set; }
+    public string? AuthorId { get; set; }
+    public User? Author { get; set; }
+    public Guid? SubForumId { get; set; }
+    public SubForum? SubForum { get; set; }
     public ICollection<Post> Posts { get; set; } = new List<Post>();
 }

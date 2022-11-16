@@ -2,6 +2,9 @@
 
 public class Category
 {
+    public Category()
+    {
+    }
     public Category(string name, Forum forum, string? description = null, bool isModerationOnly = false)
     {
         Name = name;
@@ -10,16 +13,12 @@ public class Category
         Forum = forum;
     }
 
-    public Category()
-    {
-    }
-
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now; 
     public DateTime LastUpdatedAt { get; set; }
-    public Guid? CreatedById { get; set; }
+    public string? CreatedById { get; set; }
     public User? CreatedBy { get; set; }
-    public Guid? LastUpdatedById { get; set; }
+    public string? LastUpdatedById { get; set; }
     public User? LastUpdatedBy { get; set; }
     public string Name { get; set; }   
     public string? Description { get; set; }
@@ -28,5 +27,4 @@ public class Category
     public Guid ForumId { get; set; }
     public Forum Forum { get; set; }
     public ICollection<SubForum> Subforums { get; set; } = new List<SubForum>();
-    public ICollection<CategoryModerator> CategoryModerators { get; set; }
 }

@@ -20,6 +20,7 @@ namespace API.Controllers
             _subForumService = subForumService;
         }
 
+        [ProducesResponseType(typeof(CategoryResponseDto), 200)]
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCategoryDto updateCategoryDto)
         {
@@ -27,6 +28,7 @@ namespace API.Controllers
             return Ok(categoryDto);
         }
 
+        [ProducesResponseType(typeof(CategoryResponseDto), 200)]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
@@ -34,6 +36,7 @@ namespace API.Controllers
             return Ok(deleted);
         }
 
+        [ProducesResponseType(typeof(SubForumResponseDto), 200)]
         [HttpPost("{id:guid}/SubForums")]
         public async Task<IActionResult> AddSubForum([FromRoute] Guid id, [FromBody] CreateSubForumDto createSubForumDto)
         {

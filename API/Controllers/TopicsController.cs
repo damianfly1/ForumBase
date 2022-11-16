@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Post;
+using Application.DTOs.SubForum;
 using Application.DTOs.Topic;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,16 @@ namespace API.Controllers
             _postService = postService;
         }
 
+        [ProducesResponseType(typeof(TopicParentNestedResponseDto), 200)]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var topic = _topicService.GetTopicNested(id);
+            var topic = await _topicService.GetTopicNested(id);
             return Ok(topic);
         }
 
         [HttpPut("{id:guid}")]
+        [ProducesResponseType(typeof(TopicResponseDto), 200)]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateTopicDto updateTopicDto)
         {
             var topic = await _topicService.UpdateTopic(id, updateTopicDto);
@@ -33,6 +36,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(TopicResponseDto), 200)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var topic = await _topicService.DeleteTopic(id);
@@ -40,6 +44,7 @@ namespace API.Controllers
         }
 
         [HttpPost("{id:guid}/Posts")]
+        [ProducesResponseType(typeof(PostResponseDto), 200)]
         public async Task<IActionResult> AddPost([FromRoute] Guid id, [FromBody] CreatePostDto createPostDto)
         {
             var post = await _postService.AddPost(id, createPostDto);

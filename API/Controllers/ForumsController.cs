@@ -27,6 +27,7 @@ public class ForumsController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(ForumResponseDto), 200)]
     public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateForumDto updateForumDto)
     {
         var forumDto = await _forumService.UpdateForum(id, updateForumDto);
@@ -34,6 +35,7 @@ public class ForumsController : ControllerBase
     }
 
     [HttpPost("{id:guid}/Categories")]
+    [ProducesResponseType(typeof(CategoryResponseDto), 200)]
     public async Task<IActionResult> AddCategory([FromRoute] Guid id, [FromBody] CreateCategoryDto createCategoryDto)
     {
         var categoryDto = await _categoryService.AddCategory(id, createCategoryDto);

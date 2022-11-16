@@ -21,7 +21,8 @@ public class TopicService : ITopicService
     public async Task<TopicResponseDto> AddTopic(Guid subForumId, CreateTopicDto createTopicDto)
     {
         var subForum = await _subForumRepository.GetById(subForumId);
-        Topic topic = new Topic(createTopicDto.Name, createTopicDto.IsPinned, createTopicDto.IsClosed); //tutaj pomyslec o tym
+        Topic topic = new Topic(createTopicDto.Name, subForum, createTopicDto.IsPinned, createTopicDto.IsClosed); //tutaj pomyslec o tym
+        topic.LastUpdatedAt = DateTime.UtcNow;
         var result = await _topicRepository.Insert(topic);
         await _topicRepository.Save();
         return _mapper.Map<TopicResponseDto>(result);
@@ -30,8 +31,8 @@ public class TopicService : ITopicService
     public async Task<TopicResponseDto> DeleteTopic(Guid id)
     {
 
-        var result = await _subForumRepository.Delete(id);
-        await _subForumRepository.Save();
+        var result = await _topicRepository.Delete(id);
+        await _topicRepository.Save();
         return _mapper.Map<TopicResponseDto>(result);
     }
 

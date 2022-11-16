@@ -3,6 +3,7 @@ using Application.DTOs.Forum;
 using Application.DTOs.Post;
 using Application.DTOs.SubForum;
 using Application.DTOs.Topic;
+using Application.DTOs.User;
 using AutoMapper;
 using Domain.Models.Entities;
 
@@ -43,5 +44,8 @@ public class AutoMapperProfile : Profile
 
         //POST PUT DELETE category
         CreateMap<Post, PostResponseDto>();
+
+        CreateMap<UserRegistrationDto, User>()
+        .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
     }
 }
