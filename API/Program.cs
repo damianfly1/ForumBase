@@ -4,7 +4,9 @@ using AutoMapper;
 using Domain.Models.Entities;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Persistance;
 using Persistance.Repositories;
@@ -49,6 +51,13 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
+
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -71,13 +80,18 @@ builder.Services.AddScoped<IForumService, ForumService>();
 builder.Services.AddScoped<ISubForumService, SubForumService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IPostService, PostService>();
-builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 //repositories
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IForumRepository, ForumRepository>();
 builder.Services.AddScoped<ISubForumRepository, SubForumRepository>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 
 var app = builder.Build();
@@ -92,6 +106,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("MyAllowSpecificOrigins");
+
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+    RequestPath = new PathString("/Resources")
+});
 
 app.UseAuthentication();
 

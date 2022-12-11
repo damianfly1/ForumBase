@@ -27,16 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validators\" />
+    <Folder Include="Resources\Images\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API.Tests\API.Tests.csproj" />
-    <ProjectReference Include="..\Application.Tests\Application.Tests.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Domain.Tests\Domain.Tests.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Persistance\Persistance.csproj" />
   </ItemGroup>
 

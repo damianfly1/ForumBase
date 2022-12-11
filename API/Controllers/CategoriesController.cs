@@ -3,6 +3,7 @@ using Application.DTOs.Category;
 using Application.DTOs.SubForum;
 using Application.Services;
 using Domain.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,28 +21,55 @@ namespace API.Controllers
             _subForumService = subForumService;
         }
 
-        [ProducesResponseType(typeof(CategoryResponseDto), 200)]
         [HttpPut("{id:guid}")]
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(typeof(CategoryResponseDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCategoryDto updateCategoryDto)
         {
-            var categoryDto = await _categoryService.UpdateCategory(id, updateCategoryDto);
-            return Ok(categoryDto);
+            try
+            {
+                var categoryDto = await _categoryService.UpdateCategory(id, updateCategoryDto);
+                return Ok(categoryDto);
+            }
+            catch (ApplicationException){ return NotFound(); }            
         }
 
-        [ProducesResponseType(typeof(CategoryResponseDto), 200)]
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            var deleted =  await _categoryService.DeleteCategory(id);
-            return Ok(deleted);
+            try
+            {
+                await _categoryService.DeleteCategory(id);
+                return NoContent();
+            }
+            catch (ApplicationException) { return NotFound(); }
         }
 
-        [ProducesResponseType(typeof(SubForumResponseDto), 200)]
         [HttpPost("{id:guid}/SubForums")]
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(typeof(SubForumResponseDto), 201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> AddSubForum([FromRoute] Guid id, [FromBody] CreateSubForumDto createSubForumDto)
         {
-            var subForumDto = await _subForumService.AddSubForum(id, createSubForumDto);
-            return Ok(subForumDto);
+            try
+            {
+                var subForumDto = await _subForumService.AddSubForum(id, createSubForumDto);
+                return CreatedAtAction(null, subForumDto);
+            }
+            catch (ApplicationException) { return NotFound(); }
         }
     }
 }

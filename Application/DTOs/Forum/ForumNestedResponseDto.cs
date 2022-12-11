@@ -7,6 +7,8 @@ public class ForumNestedResponseDto
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
+    public string? Faq { get; set; }
+    public string? Rules { get; set; }
 
     public ICollection<CategoryNestedResponseDto> Categories { get; set; } = new List<CategoryNestedResponseDto>();
 }

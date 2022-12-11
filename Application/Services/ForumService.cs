@@ -16,29 +16,12 @@ public class ForumService : IForumService
         _mapper = mapper;
     }
     
-    public async Task<ForumNestedResponseDto> GetForumNested(Guid id)
+    public async Task<ForumNestedResponseDto> GetForumNested()
     {
-        var forum = await _forumRepository.GetNested(id);
+        var forum = await _forumRepository.GetNested();
 
-        if(forum is null) throw new Exception("Item not found");
+        if(forum is null) throw new ApplicationException("NOT FOUND");
         
         return _mapper.Map<ForumNestedResponseDto>(forum);
-    }
-
-    public async Task<ForumResponseDto> UpdateForum(Guid id, UpdateForumDto updateForumDto)
-    {
-        var forum = await _forumRepository.GetById(id);
-
-        if (forum is null) throw new Exception("Item not found");
-
-        forum.Description = updateForumDto.Description;
-        forum.Name = updateForumDto.Name;
-        forum.Rules = updateForumDto.Rules;
-        forum.Faq = updateForumDto.Faq;
-        forum.LastUpdatedAt = DateTime.UtcNow;
-
-        await _forumRepository.Update(forum);
-        await _forumRepository.Save();
-        return _mapper.Map<ForumResponseDto>(forum);
     }
 }

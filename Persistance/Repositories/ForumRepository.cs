@@ -10,12 +10,11 @@ public class ForumRepository : GenericRepository<Forum>, IForumRepository
     {
     }
 
-    public Task<Forum> GetNested(Guid id)
+    public async Task<Forum> GetNested()
     {
-        return _context.Forums
-            .Where(folder => folder.Id == id)
-            .Include(folder => folder.Categories)
+        return await _context.Forums
+            .Include(forum => forum.Categories)
             .ThenInclude(category => category.Subforums)
-            .FirstAsync();
+            .FirstOrDefaultAsync();
     }
 }

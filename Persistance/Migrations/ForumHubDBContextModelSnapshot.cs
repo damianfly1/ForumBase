@@ -31,9 +31,6 @@ namespace Persistance.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -46,20 +43,13 @@ namespace Persistance.Migrations
                     b.Property<DateTime>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("ForumId");
-
-                    b.HasIndex("LastUpdatedById");
 
                     b.ToTable("Categories");
                 });
@@ -70,23 +60,11 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Faq")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastUpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastUpdatedById")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -97,39 +75,22 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("LastUpdatedById");
-
                     b.ToTable("Forums");
                 });
 
-            modelBuilder.Entity("Domain.Models.Entities.Image", b =>
+            modelBuilder.Entity("Domain.Models.Entities.LikedPosts", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedById")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("LastUpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.HasKey("UserId", "PostId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("PostId");
 
-                    b.HasIndex("CreatedById")
-                        .IsUnique()
-                        .HasFilter("[CreatedById] IS NOT NULL");
-
-                    b.ToTable("Images");
+                    b.ToTable("LikedPosts");
                 });
 
             modelBuilder.Entity("Domain.Models.Entities.Post", b =>
@@ -144,16 +105,10 @@ namespace Persistance.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsEdited")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Rating")
+                    b.Property<int>("Points")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -166,8 +121,6 @@ namespace Persistance.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("LastUpdatedById");
 
                     b.HasIndex("TopicId");
 
@@ -195,9 +148,6 @@ namespace Persistance.Migrations
                     b.Property<DateTime>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -207,8 +157,6 @@ namespace Persistance.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("LastUpdatedById");
 
                     b.ToTable("Subforums");
                 });
@@ -234,9 +182,6 @@ namespace Persistance.Migrations
                     b.Property<DateTime>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LastUpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -244,11 +189,12 @@ namespace Persistance.Migrations
                     b.Property<Guid?>("SubForumId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("LastUpdatedById");
 
                     b.HasIndex("SubForumId");
 
@@ -263,8 +209,8 @@ namespace Persistance.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("AvatarId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -280,20 +226,8 @@ namespace Persistance.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Footer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsBanned")
                         .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastUpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -322,12 +256,6 @@ namespace Persistance.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Reputation")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -339,10 +267,6 @@ namespace Persistance.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AvatarId")
-                        .IsUnique()
-                        .HasFilter("[AvatarId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -384,22 +308,22 @@ namespace Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b5b28cb7-d52f-4bc3-a4a4-1957285ab6d6",
-                            ConcurrencyStamp = "40a91087-1cae-4358-b868-78b69e6d50ed",
+                            Id = "64293d2a-710d-42ef-b143-3e853a625f89",
+                            ConcurrencyStamp = "f214a0fd-df65-4ae2-8b72-160043b4c118",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "9151cdf1-81db-4b08-b8df-9a7043d17462",
-                            ConcurrencyStamp = "1a62e484-a3c9-47ea-a5aa-69c4704be79c",
+                            Id = "be42e99f-b0f1-458e-a4ce-fd11fd1df54a",
+                            ConcurrencyStamp = "8e612b87-0a89-4281-ab1c-da033c0b7e9a",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = "0c21d796-fff0-489c-b79c-fd2890c76cf0",
-                            ConcurrencyStamp = "4aa0146f-aff0-45f0-a5ed-2efcb7284fac",
+                            Id = "fc6a24fb-6667-48b7-b357-2a6f1219ebee",
+                            ConcurrencyStamp = "02f36689-5a7c-45b8-ba15-9ffd614ae944",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -513,54 +437,32 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Models.Entities.Category", b =>
                 {
-                    b.HasOne("Domain.Models.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Domain.Models.Entities.Forum", "Forum")
                         .WithMany("Categories")
                         .HasForeignKey("ForumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Models.Entities.User", "LastUpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("LastUpdatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedBy");
-
                     b.Navigation("Forum");
-
-                    b.Navigation("LastUpdatedBy");
                 });
 
-            modelBuilder.Entity("Domain.Models.Entities.Forum", b =>
+            modelBuilder.Entity("Domain.Models.Entities.LikedPosts", b =>
                 {
-                    b.HasOne("Domain.Models.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("Domain.Models.Entities.Post", "Post")
+                        .WithMany("LikedBy")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Domain.Models.Entities.User", "LastUpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("LastUpdatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("Domain.Models.Entities.User", "User")
+                        .WithMany("LikedPosts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("CreatedBy");
+                    b.Navigation("Post");
 
-                    b.Navigation("LastUpdatedBy");
-                });
-
-            modelBuilder.Entity("Domain.Models.Entities.Image", b =>
-                {
-                    b.HasOne("Domain.Models.Entities.User", "CreatedBy")
-                        .WithOne()
-                        .HasForeignKey("Domain.Models.Entities.Image", "CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedBy");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Models.Entities.Post", b =>
@@ -569,19 +471,12 @@ namespace Persistance.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("Domain.Models.Entities.User", "LastUpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("LastUpdatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Domain.Models.Entities.Topic", "Topic")
                         .WithMany("Posts")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Author");
-
-                    b.Navigation("LastUpdatedBy");
 
                     b.Navigation("Topic");
                 });
@@ -597,16 +492,9 @@ namespace Persistance.Migrations
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Models.Entities.User", "LastUpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("LastUpdatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("Category");
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("LastUpdatedBy");
                 });
 
             modelBuilder.Entity("Domain.Models.Entities.Topic", b =>
@@ -615,30 +503,13 @@ namespace Persistance.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("Domain.Models.Entities.User", "LastUpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("LastUpdatedById")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Domain.Models.Entities.SubForum", "SubForum")
                         .WithMany("Topics")
                         .HasForeignKey("SubForumId");
 
                     b.Navigation("Author");
 
-                    b.Navigation("LastUpdatedBy");
-
                     b.Navigation("SubForum");
-                });
-
-            modelBuilder.Entity("Domain.Models.Entities.User", b =>
-                {
-                    b.HasOne("Domain.Models.Entities.Image", "Avatar")
-                        .WithOne()
-                        .HasForeignKey("Domain.Models.Entities.User", "AvatarId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Avatar");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -702,6 +573,11 @@ namespace Persistance.Migrations
                     b.Navigation("Categories");
                 });
 
+            modelBuilder.Entity("Domain.Models.Entities.Post", b =>
+                {
+                    b.Navigation("LikedBy");
+                });
+
             modelBuilder.Entity("Domain.Models.Entities.SubForum", b =>
                 {
                     b.Navigation("Topics");
@@ -710,6 +586,11 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.Models.Entities.Topic", b =>
                 {
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Domain.Models.Entities.User", b =>
+                {
+                    b.Navigation("LikedPosts");
                 });
 #pragma warning restore 612, 618
         }

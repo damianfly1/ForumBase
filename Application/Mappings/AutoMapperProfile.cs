@@ -20,32 +20,39 @@ public class AutoMapperProfile : Profile
             .ForMember(c => c.Subforums, opt => opt.MapFrom(s => s.Subforums));
         CreateMap<SubForum, SubForumNestedResponseDto>();
 
-        //PUT forum
-        CreateMap<Forum, ForumResponseDto>();
-
-        //POST PUT DELETE category
+        //POST PUT category
         CreateMap<Category, CategoryResponseDto>();
 
         //GET subforum nested
         CreateMap<SubForum, SubForumParentNestedResponseDto>()
             .ForMember(sf => sf.Topics, opt => opt.MapFrom(t => t.Topics));
-        CreateMap<Topic, TopicNestedResponseDto>();
+        CreateMap<Topic, TopicNestedResponseDto>()
+            .ForMember(t => t.ResponseCount, o => o.MapFrom(x => x.Posts.Count));
 
-        //POST PUT DELETE subforum
+        //POST PUT subforum
         CreateMap<SubForum, SubForumResponseDto>();
 
         //GET topic nested
         CreateMap<Topic, TopicParentNestedResponseDto>()
             .ForMember(t => t.Posts, opt => opt.MapFrom(p => p.Posts));
-        CreateMap<Post, PostNestedResponseDto>();
+        CreateMap<Post, PostNestedResponseDto>()
+            .ForMember(x => x.LikedBy, opt => opt.MapFrom(lp => lp.LikedBy));
 
-        //POST PUT DELETE topic
+        CreateMap<LikedPosts, LikedByDto>();
+        
+            
+
+        //POST PUT topic
         CreateMap<Topic, TopicResponseDto>();
 
-        //POST PUT DELETE category
+        //POST PUT category
         CreateMap<Post, PostResponseDto>();
 
+        //REGISTER user
         CreateMap<UserRegistrationDto, User>()
         .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+
+        //GET user
+        CreateMap<User, UserResponseDto>();
     }
 }

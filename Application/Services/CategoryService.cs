@@ -25,24 +25,26 @@ public class CategoryService : ICategoryService
     public async Task<CategoryResponseDto> AddCategory(Guid forumId, CreateCategoryDto model)
     {
         var forum = await _forumRepository.GetById(forumId);
+
+        if(forum == null) throw new ApplicationException("NOT FOUND");
+
         Category category = new Category(model.Name, forum, model.Description);
         var result = await _categoryRepository.Insert(category);
         await _categoryRepository.Save();
         return _mapper.Map<CategoryResponseDto>(result);
     }
 
-    public async Task<CategoryResponseDto> DeleteCategory(Guid id)
+    public async Task DeleteCategory(Guid id)
     {
         var result = await _categoryRepository.Delete(id);
         await _categoryRepository.Save();
-        return _mapper.Map<CategoryResponseDto>(result);
     }
 
     public async Task<CategoryResponseDto> UpdateCategory(Guid id, UpdateCategoryDto updateCategoryDto)
     {
         var category = await _categoryRepository.GetById(id);
 
-        if (category is null) throw new Exception("Item not found");
+        if (category == null) throw new ApplicationException("NOT FOUND");
 
         category.Description = updateCategoryDto.Description;
         category.Name = updateCategoryDto.Name;

@@ -7,5 +7,5 @@ public interface ICategoryService
 {
     public Task<CategoryResponseDto> AddCategory(Guid forumId, CreateCategoryDto createCategoryDto);
     public Task<CategoryResponseDto> UpdateCategory(Guid id, UpdateCategoryDto updateCategoryDto);
-    public Task<CategoryResponseDto> DeleteCategory(Guid id);
+    public Task DeleteCategory(Guid id);
 }

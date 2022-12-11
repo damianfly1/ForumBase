@@ -32,6 +32,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<T> Delete(object id)
     {
         var existing = await table.FindAsync(id);
+        if (existing == null) throw new ApplicationException();
         table.Remove(existing);
         return existing;
     }

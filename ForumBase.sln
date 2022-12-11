@@ -1,29 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{0BC836F8-FA08-4CB8-AEA7-924A86ADE087}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{0BC836F8-FA08-4CB8-AEA7-924A86ADE087}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{457DACA0-807C-4A8A-A43D-789CD01B415C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{457DACA0-807C-4A8A-A43D-789CD01B415C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{C125E8DC-61E5-4BAD-9AE0-8ADFC300CED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C125E8DC-61E5-4BAD-9AE0-8ADFC300CED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistance", "Persistance\Persistance.csproj", "{E053E8C4-9564-440C-B4BD-794BD1539A95}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{91B1DFFD-5F8A-4B51-9149-3D8394CFF7A2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D132CA57-17EF-4575-8D68-D5DAB8AABEBE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration-tests", "integration-tests", "{3B69F402-6712-4E39-84FC-51E19ECCBB3B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit-tests", "unit-tests", "{12303A3F-37C0-4D5B-B5F8-FFC7B0C399F3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{A342374C-9739-4699-898E-28A3402C8186}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{FB911224-D227-4916-A002-3FCF8D2AFEF6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Tests", "API.Tests\API.Tests.csproj", "{26ECC5F3-D58F-46D0-A7A4-A99114039C28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance", "Persistance\Persistance.csproj", "{E053E8C4-9564-440C-B4BD-794BD1539A95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,32 +33,9 @@ Global
 		{E053E8C4-9564-440C-B4BD-794BD1539A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E053E8C4-9564-440C-B4BD-794BD1539A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E053E8C4-9564-440C-B4BD-794BD1539A95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{91B1DFFD-5F8A-4B51-9149-3D8394CFF7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91B1DFFD-5F8A-4B51-9149-3D8394CFF7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91B1DFFD-5F8A-4B51-9149-3D8394CFF7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91B1DFFD-5F8A-4B51-9149-3D8394CFF7A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A342374C-9739-4699-898E-28A3402C8186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A342374C-9739-4699-898E-28A3402C8186}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A342374C-9739-4699-898E-28A3402C8186}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A342374C-9739-4699-898E-28A3402C8186}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB911224-D227-4916-A002-3FCF8D2AFEF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB911224-D227-4916-A002-3FCF8D2AFEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB911224-D227-4916-A002-3FCF8D2AFEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB911224-D227-4916-A002-3FCF8D2AFEF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26ECC5F3-D58F-46D0-A7A4-A99114039C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26ECC5F3-D58F-46D0-A7A4-A99114039C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26ECC5F3-D58F-46D0-A7A4-A99114039C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26ECC5F3-D58F-46D0-A7A4-A99114039C28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3B69F402-6712-4E39-84FC-51E19ECCBB3B} = {D132CA57-17EF-4575-8D68-D5DAB8AABEBE}
-		{12303A3F-37C0-4D5B-B5F8-FFC7B0C399F3} = {D132CA57-17EF-4575-8D68-D5DAB8AABEBE}
-		{A342374C-9739-4699-898E-28A3402C8186} = {12303A3F-37C0-4D5B-B5F8-FFC7B0C399F3}
-		{FB911224-D227-4916-A002-3FCF8D2AFEF6} = {12303A3F-37C0-4D5B-B5F8-FFC7B0C399F3}
-		{26ECC5F3-D58F-46D0-A7A4-A99114039C28} = {3B69F402-6712-4E39-84FC-51E19ECCBB3B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3CECFD0-0514-4D5A-8F82-7B3C5A978F46}

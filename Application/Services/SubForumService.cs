@@ -21,24 +21,26 @@ public class SubForumService : ISubForumService
     public async Task<SubForumResponseDto> AddSubForum(Guid categoryId, CreateSubForumDto createSubForumDto)
     {
         var category = await _categoryRepository.GetById(categoryId);
+
+        if (category == null) throw new ApplicationException("NOT FOUND");
+
         SubForum subForum = new SubForum(createSubForumDto.Name, createSubForumDto.Description, category);
         var result = await _subForumRepository.Insert(subForum);
         await _subForumRepository.Save();
         return _mapper.Map<SubForumResponseDto>(result);
     }
 
-    public async Task<SubForumResponseDto> DeleteSubForum(Guid id)
+    public async Task DeleteSubForum(Guid id)
     {
         var result = await _subForumRepository.Delete(id);
         await _subForumRepository.Save();
-        return _mapper.Map<SubForumResponseDto>(result);
     }
 
     public async Task<SubForumParentNestedResponseDto> GetSubForumNested(Guid id)
     {
         var subForum = await _subForumRepository.GetNested(id);
 
-        if (subForum is null) throw new Exception("Item not found");
+        if (subForum is null) throw new ApplicationException("NOT FOUND");
 
         return _mapper.Map<SubForumParentNestedResponseDto>(subForum);
     }
@@ -47,7 +49,7 @@ public class SubForumService : ISubForumService
     {
         var subForum = await _subForumRepository.GetById(id);
 
-        if (subForum is null) throw new Exception("Item not found");
+        if (subForum is null) throw new Exception("NOT FOUND");
 
         subForum.Description = updateSubForumDto.Description;
         subForum.Name = updateSubForumDto.Name;

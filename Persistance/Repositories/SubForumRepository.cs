@@ -10,12 +10,12 @@ public class SubForumRepository : GenericRepository<SubForum>, ISubForumReposito
     {
     }
 
-    public Task<SubForum> GetNested(Guid id)
+    public async Task<SubForum> GetNested(Guid id)
     {
-        return _context.Subforums
+        return await _context.Subforums
             .Where(s => s.Id == id)
-            .Include(s => s.Topics)
-            .FirstAsync();
-            
+            .Include(s => s.Topics).ThenInclude(t=> t.Author)
+            .Include(s => s.Topics).ThenInclude(t => t.Posts)
+            .FirstOrDefaultAsync();
     }
 }

@@ -10,11 +10,12 @@ public class TopicRepository : GenericRepository<Topic>, ITopicRepository
     {
     }
 
-    public Task<Topic> GetNested(Guid id)
+    public async Task<Topic?> GetNested(Guid id)
     {
-        return _context.Topics
+        return await _context.Topics
             .Where(t => t.Id == id)
-            .Include(t => t.Posts)
-            .FirstAsync();
+            .Include(t => t.Posts).ThenInclude(p => p.Author)
+            .Include(t => t.Posts).ThenInclude(p => p.LikedBy)
+            .FirstOrDefaultAsync();
     }
 }

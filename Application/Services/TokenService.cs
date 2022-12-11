@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Application.Services;
 
-public class TokenService
+public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
     private readonly IConfigurationSection _jwtSettings;
@@ -28,9 +28,9 @@ public class TokenService
     public async Task<List<Claim>> GetClaims(User user)
     {
         var claims = new List<Claim>
-    {
+        {
         new Claim(ClaimTypes.Name, user.Email)
-    };
+        };
         var roles = await _userManager.GetRolesAsync(user);
         foreach (var role in roles)
         {

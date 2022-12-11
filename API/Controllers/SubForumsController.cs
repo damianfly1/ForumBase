@@ -2,6 +2,7 @@
 using Application.DTOs.SubForum;
 using Application.DTOs.Topic;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,45 +13,77 @@ namespace API.Controllers
     {
         private readonly ISubForumService _subForumService;
         private readonly ITopicService _topicService;
-        private readonly IPostService _postService;
 
-        public SubForumsController(ISubForumService subForumService, ITopicService topicService, IPostService postService)
+        public SubForumsController(ISubForumService subForumService, ITopicService topicService)
         {
             _subForumService = subForumService;
             _topicService = topicService;
-            _postService = postService;
         }
 
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(SubForumParentNestedResponseDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var subForumDto = await _subForumService.GetSubForumNested(id);
-            return Ok(subForumDto);
+            try
+            {
+                var subForumDto = await _subForumService.GetSubForumNested(id);
+                return Ok(subForumDto);
+            }
+            catch (ApplicationException) { return NotFound(); }
         }
 
         [HttpPut("{id:guid}")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(typeof(SubForumResponseDto), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateSubForumDto updateSubForumDto)
         {
-            var subForumDto = await _subForumService.UpdateSubForum(id, updateSubForumDto);
-            return Ok(subForumDto);
+            try
+            {
+                var subForumDto = await _subForumService.UpdateSubForum(id, updateSubForumDto);
+                return Ok(subForumDto);
+            }
+            catch (ApplicationException) { return NotFound(); }
         }
 
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(typeof(SubForumResponseDto), 200)]
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            var subForumDto = await _subForumService.DeleteSubForum(id);
-            return Ok(subForumDto);
+            try
+            {
+                await _subForumService.DeleteSubForum(id);
+                return NoContent();
+            }
+            catch (ApplicationException) { return NotFound(); }
         }
 
         [HttpPost("{id:guid}/Topics")]
-        [ProducesResponseType(typeof(TopicResponseDto), 200)]
+        [Authorize]
+        [ProducesResponseType(typeof(TopicResponseDto), 201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> AddTopic([FromRoute] Guid id, [FromBody] CreateTopicDto createTopicDto)
         {
-            var topicDto = await _topicService.AddTopic(id, createTopicDto);
-            return Ok(topicDto);
+            try
+            {
+                var topicDto = await _topicService.AddTopic(id, createTopicDto, HttpContext.User.Identity.Name);
+                return CreatedAtAction(null, topicDto);
+            }
+            catch (ApplicationException) { return NotFound(); }
         }
     }
 }

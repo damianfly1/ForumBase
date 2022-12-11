@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Category;
 using Application.DTOs.Forum;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -18,28 +19,35 @@ public class ForumsController : ControllerBase
         _categoryService = categoryService;
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet]
     [ProducesResponseType(typeof(ForumNestedResponseDto), 200)]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> Get()
     {
-        var forumDto = await _forumService.GetForumNested(id);
-        return Ok(forumDto);
-    }
-
-    [HttpPut("{id:guid}")]
-    [ProducesResponseType(typeof(ForumResponseDto), 200)]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateForumDto updateForumDto)
-    {
-        var forumDto = await _forumService.UpdateForum(id, updateForumDto);
-        return Ok(forumDto);
+        try
+        {
+            var forumDto = await _forumService.GetForumNested();
+            return Ok(forumDto);
+        }
+        catch (ApplicationException) { return NotFound(); }
     }
 
     [HttpPost("{id:guid}/Categories")]
-    [ProducesResponseType(typeof(CategoryResponseDto), 200)]
+    [Authorize(Roles ="Administrator")]
+    [ProducesResponseType(typeof(CategoryResponseDto), 201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(403)]
     public async Task<IActionResult> AddCategory([FromRoute] Guid id, [FromBody] CreateCategoryDto createCategoryDto)
     {
-        var categoryDto = await _categoryService.AddCategory(id, createCategoryDto);
-        return Ok(categoryDto);
+        try
+        {
+            var categoryDto = await _categoryService.AddCategory(id, createCategoryDto);
+            return CreatedAtAction(null, categoryDto);
+        }
+        catch (ApplicationException) { return NotFound(); }
     }
 
 }
