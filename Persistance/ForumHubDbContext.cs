@@ -17,15 +17,11 @@ public class ForumHubDBContext : IdentityDbContext<User>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-       // Debugger.Launch();
-
         optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ForumHubDB;Trusted_Connection=True;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-       //Debugger.Launch();
-
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
 

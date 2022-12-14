@@ -28,8 +28,10 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ForumHubDBContext>();
+builder.Services.AddIdentity<User, IdentityRole>(opt =>
+{
+    opt.User.RequireUniqueEmail = true;
+}).AddEntityFrameworkStores<ForumHubDBContext>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(opt =>

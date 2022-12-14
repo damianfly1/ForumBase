@@ -21,8 +21,6 @@ namespace API.Controllers
 
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(TopicParentNestedResponseDto), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
